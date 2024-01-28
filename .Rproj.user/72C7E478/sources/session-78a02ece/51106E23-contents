@@ -4,7 +4,7 @@ author: Jacob Álvarez
 output: 
   pdf_document:
     includes:
-      in_header: header.tex
+      in_header:
 fontsize: 12pt
 ---
 
@@ -26,6 +26,11 @@ https://github.com/ja2905a/PSet2/tree/main
 2. The script below doesn't work. Type the corrected code chunk into your problem set. Annotate any line you correct to note your fix (i.e. `# unbalanced parentheses`). *There are more than five errors.*
 
 ```{r}
+
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    eval = FALSE
+  )
 
 #uncorrected
 
@@ -65,7 +70,8 @@ summarise(
 )
 
 # output as table
-knitr::kable(table) #performed function on table instead of gspace; pulled kable function from unloaded knitr package
+knitr::kable(table) #performed function on table instead of gspace
+#pulled kable function from unloaded knitr package
 
 ```
 

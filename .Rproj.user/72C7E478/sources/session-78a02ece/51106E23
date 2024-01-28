@@ -3,7 +3,7 @@
     "path": "~/Schoolwork Spring 2024/Data Analysis/ps2/PSet2/ps2.Rmd",
     "project_path": "ps2.Rmd",
     "type": "r_markdown",
-    "hash": "1907217730",
+    "hash": "40613553",
     "contents": "",
     "dirty": false,
     "created": 1706470872568.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "30,0",
-        "scrollLine": "22"
+        "cursorPosition": "73,50",
+        "scrollLine": "69"
     },
     "folds": "",
-    "lastKnownWriteTime": 1706472933,
+    "lastKnownWriteTime": 1706473291,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1706472933363,
+    "last_content_update": 1706473291135,
     "read_only": false,
     "read_only_alternatives": []
 }
