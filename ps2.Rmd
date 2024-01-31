@@ -190,7 +190,7 @@ ggplot(data = gspace,
        mapping= aes(x = annual_weight_avg_2021,
                     y = annual_weight_avg_2010,
                     xmin = 0)) +
-  geom_point(color=ifelse(gspace$annual_avg_2021 < gspace$annual_avg_2010,
+  geom_point(color=ifelse(gspace$annual_weight_avg_2021 < gspace$annual_weight_avg_2010,
                           "red", "black")) +
   labs(x = "Population-Weighted Greenspace 2021",
        y = "Population-Weighted Greenspace 2010",
