@@ -127,6 +127,8 @@ knitr::kable(summary21)
 
 ```
 
+The annual average NDVI ranged from 0.04 to 0.63, with both the median and mean at about 0.28, though the weighted annual NDVI had a slightly smaller range between 0.07 and 0.62, with median and mean both between 0.26 and 0.27. Peak NDVI ranged from 0.05 to 0.66, with both the median and mean between 0.35 and 0.36. The weighted peak NDVI ranged from 0.07 to 0.64, with median and mean both at 0.34.
+
 5. Report the number of urban areas that satisfy the conditions below. Either write your code inline or echo the code that generated the answer.   
 
     a. Scored `High` or above for greenspace in 2015.  
