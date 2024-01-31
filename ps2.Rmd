@@ -1,11 +1,8 @@
 ---
 title: "Problem Set 2"
-author: Jacob Álvarez
-output: 
-  pdf_document:
-    includes:
-      in_header:
+author: "Jacob Álvarez"
 fontsize: 12pt
+output: pdf_document
 ---
 
 ```{r setup, include=TRUE}
@@ -15,15 +12,15 @@ fontsize: 12pt
   )
 ```
 
-Answer the questions below to the best of your ability. Write clearly, and format your tables and visuals appropriately. You must use `R Markdown` to compose and compile your work. For full credit, `echo` all code chunks, and include your `setup` chunk. Submit your work in hard copy at the beginning of class. 
+Answer the questions below to the best of your ability. Write clearly, and format your tables and visuals appropriately. You must use R Markdown to compose and compile your work. For full credit, echo all code chunks, and include your setup chunk. Submit your work in hard copy at the beginning of class.
 
-You need the [Global Greenspace Indicator Data](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TMWYHB) for this assignment. Review the `README.txt` file for information about the data, variables, etc.
+You need the [Global Greenspace Indicator Data](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/TMWYHB) for this assignment. Review the README.txt file for information about the data, variables, etc.
 
-1. Show me that you're all set on GitHub. Create a public repository named `PSet2`. Clone it, include all your project files (including your `.Rmd` and `.pdf` files) for the work below, and commit/push your work to your repository. Include the link to your repo as your answer to this question.  
+1.  Show me that you're all set on GitHub. Create a public repository named PSet2. Clone it, include all your project files (including your .Rmd and .pdf files) for the work below, and commit/push your work to your repository. Include the link to your repo as your answer to this question.
 
-https://github.com/ja2905a/PSet2/tree/main
+<https://github.com/ja2905a/PSet2/tree/main>
 
-2. The script below doesn't work. Type the corrected code chunk into your problem set. Annotate any line you correct to note your fix (i.e. `# unbalanced parentheses`). *There are more than five errors.*
+2.  The script below doesn't work. Type the corrected code chunk into your problem set. Annotate any line you correct to note your fix (i.e. # unbalanced parentheses). *There are more than five errors.*
 
 ```{r}
 
@@ -53,7 +50,13 @@ knitr::opts_chunk$set(
   kable(gspace, digits = 1)
 
 #corrected
-  
+```
+```{r echo=TRUE}
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    eval = TRUE
+  )
+
 library(tidyverse)
 
 # open my data
@@ -75,9 +78,9 @@ knitr::kable(table) #performed function on table instead of gspace
 
 ```
 
-3. How many urban areas does the greenspace data cover?
+3.  How many urban areas does the greenspace data cover?
 
-```{r}
+```{r echo=TRUE}
 
 knitr::opts_chunk$set(
     echo = TRUE, 
@@ -98,9 +101,9 @@ sum(table$obs)
 
 The greenspace data has observations for 1038 urban areas.
 
-4. In a couple of sentences and with reference to a well-formatted tabulation, describe the greenspace classification scores for urban areas in 2021.
+4.  In a couple of sentences and with reference to a well-formatted tabulation, describe the greenspace classification scores for urban areas in 2021.
 
-```{r}
+```{r echo=TRUE}
 
 knitr::opts_chunk$set(
     echo = TRUE, 
@@ -129,19 +132,77 @@ knitr::kable(summary21)
 
 The annual average NDVI ranged from 0.04 to 0.63, with both the median and mean at about 0.28, though the weighted annual NDVI had a slightly smaller range between 0.07 and 0.62, with median and mean both between 0.26 and 0.27. Peak NDVI ranged from 0.05 to 0.66, with both the median and mean between 0.35 and 0.36. The weighted peak NDVI ranged from 0.07 to 0.64, with median and mean both at 0.34.
 
-5. Report the number of urban areas that satisfy the conditions below. Either write your code inline or echo the code that generated the answer.   
+5.  Report the number of urban areas that satisfy the conditions below. Either write your code inline or echo the code that generated the answer.
 
-    a. Scored `High` or above for greenspace in 2015.  
-    
-    b. Scored `Exceptionally Low` at any point in the years covered.  
+    a.  Scored `High` or above for greenspace in 2015.
 
-    c. Urban areas in arid climate that became greener (as measured by annual weighted average) from 2010 to 2020. 
+```{r echo=TRUE}
 
-6. How many urban areas became less green (measured by annual average) from 2010 to 2021? Were these changes concentrated in a particular geographic or climate region? Explain (with evidence, of course).
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    eval = TRUE
+  )
 
-7. Present a histogram showing the change in greenspace (annual average) from 2010 to 2021. Note that you will need to create a new variable equal to this difference.  
+a <- gspace |>
+  filter(indicator_2015 == "High" |
+           indicator_2015 == "Very High" |
+           indicator_2015 == "Exceptionally High")
+count(a)
 
-8. Present a scatter plot of population weighted greenspace in 2021 over the greenspace in 2010. 
+```
+
+```         
+b. Scored `Exceptionally Low` at any point in the years covered.  
+```
+
+```{r echo=TRUE}
+
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    eval = TRUE
+  )
+
+b <- gspace |>
+  filter(indicator_2010 == "Exceptionally Low" |
+           indicator_2015=="Exceptionally Low" |
+           indicator_2020 == "Exceptionally Low" |
+           indicator_2021 == "Exceptionally Low")
+count(b)
+
+```
+
+```         
+c. Urban areas in arid climate that became greener (as measured by annual weighted average) from 2010 to 2020. 
+```
+
+```{r echo=TRUE}
+
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    eval = TRUE
+  )
+
+c <- gspace |>
+  filter(Climate_region == "Arid",
+         annual_weight_avg_2020 > annual_weight_avg_2010)
+count(c)
+
+AllConditionals <- gspace |>
+    filter(indicator_2015 == "High" |
+             indicator_2015 == "Very High" |
+             indicator_2015 == "Exceptionally High",
+           indicator_2010 == "Exceptionally Low" |
+             indicator_2020 == "Exceptionally Low" |
+             indicator_2021 == "Exceptionally Low",
+           annual_weight_avg_2020 > annual_weight_avg_2010,
+           climate_region == "Arid")
+count(AllConditional) 
+```
+
+6.  How many urban areas became less green (measured by annual average) from 2010 to 2021? Were these changes concentrated in a particular geographic or climate region? Explain (with evidence, of course).
+
+7.  Present a histogram showing the change in greenspace (annual average) from 2010 to 2021. Note that you will need to create a new variable equal to this difference.
+
+8.  Present a scatter plot of population weighted greenspace in 2021 over the greenspace in 2010.
 
 **BONUS OPPORTUNITY**: Use color-coding to differentiate urban areas that added versus lost greenspace in that time. Then include a 45-degree line to further highlight the change.
-

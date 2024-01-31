@@ -38,3 +38,44 @@ summary21$Var <- c("AnnualAvg21",
 
 knitr::kable(summary21)
 
+#5. Report the number of urban areas that satisfy the conditions below.
+#Either write your code inline or echo the code that generated the answer.   
+
+#a. Scored `High` or above for greenspace in 2015.  
+
+#b. Scored `Exceptionally Low` at any point in the years covered.  
+
+#c. Urban areas in arid climate that became greener
+#(as measured by annual weighted average) from 2010 to 2020. 
+
+a <- gspace |>
+  filter(indicator_2015 == "High" |
+           indicator_2015 == "Very High" |
+           indicator_2015 == "Exceptionally High")
+count(a)
+
+b <- gspace |>
+  filter(indicator_2010 == "Exceptionally Low" |
+           indicator_2015=="Exceptionally Low" |
+           indicator_2020 == "Exceptionally Low" |
+           indicator_2021 == "Exceptionally Low")
+count(b)
+
+c <- gspace |>
+  filter(Climate_region == "Arid",
+         annual_weight_avg_2020 > annual_weight_avg_2010)
+count(c)
+
+conditional <- gspace |>
+    filter(indicator_2015 == "High" |
+             indicator_2015 == "Very High" |
+             indicator_2015 == "Exceptionally High",
+           indicator_2010 == "Exceptionally Low" |
+             indicator_2020 == "Exceptionally Low" |
+             indicator_2021 == "Exceptionally Low",
+           annual_weight_avg_2020 > annual_weight_avg_2010,
+           climate_region == "Arid")
+count(conditional)  
+
+
+
