@@ -8,8 +8,9 @@ output: pdf_document
 ```{r setup, include=TRUE}
   knitr::opts_chunk$set(
     echo = TRUE, 
-    eval = FALSE
+    eval = TRUE
   )
+library(tidyverse)
 ```
 
 Answer the questions below to the best of your ability. Write clearly, and format your tables and visuals appropriately. You must use R Markdown to compose and compile your work. For full credit, echo all code chunks, and include your setup chunk. Submit your work in hard copy at the beginning of class.
@@ -20,44 +21,9 @@ You need the [Global Greenspace Indicator Data](https://dataverse.harvard.edu/da
 
 <https://github.com/ja2905a/PSet2/tree/main>
 
-2.  The script below doesn't work. Type the corrected code chunk into your problem set. Annotate any line you correct to note your fix (i.e. # unbalanced parentheses). *There are more than five errors.*
+2.  The script below doesn't work. Type the corrected code chunk into your problem set. Annotate any line you correct to note your fix (i.e. \# unbalanced parentheses). *There are more than five errors.*
 
-```{r}
-
-knitr::opts_chunk$set(
-    echo = TRUE, 
-    eval = FALSE
-  )
-
-#uncorrected
-
-  library(tidyverse)
-
-# open my data
-  gspace = read_csv(greenspace_data_share.csv)
-
-# summarize average urban greenspace by region
-  table = 
-    gspace |>
-    group_by(Major_Geo_Region)
-    summarise(
-      obs = n()
-      avg = mean(annual_avg2020),
-      weighted avg = mean(annual_weight_avg_2020)
-    )
-
-# output as table
-  kable(gspace, digits = 1)
-
-#corrected
-```
 ```{r echo=TRUE}
-knitr::opts_chunk$set(
-    echo = TRUE, 
-    eval = TRUE
-  )
-
-library(tidyverse)
 
 # open my data
 gspace = read_csv('greenspace_data_share.csv') #added quotes around file name
@@ -81,19 +47,19 @@ knitr::kable(table) #performed function on table instead of gspace
 3.  How many urban areas does the greenspace data cover?
 
 ```{r echo=TRUE}
-
 knitr::opts_chunk$set(
     echo = TRUE, 
     eval = TRUE
   )
 
-library(tidyverse)
-
-gspace = read_csv('greenspace_data_share.csv')
-
 table = 
   gspace |>
-  group_by(Major_Geo_Region)
+  group_by(Major_Geo_Region) |> #added pipe operator
+summarise(
+  obs = n(), #added comma
+  avg = mean(annual_avg_2020), #added underscore in annual_avg_2020
+  weighted_avg = mean(annual_weight_avg_2020) #added underscore in weighted_avg
+)
 
 sum(table$obs)
 
@@ -104,11 +70,6 @@ The greenspace data has observations for 1038 urban areas.
 4.  In a couple of sentences and with reference to a well-formatted tabulation, describe the greenspace classification scores for urban areas in 2021.
 
 ```{r echo=TRUE}
-
-knitr::opts_chunk$set(
-    echo = TRUE, 
-    eval = TRUE
-  )
 
 #WARNING: I know this code is bad. I am sorry.
 
@@ -138,11 +99,6 @@ The annual average NDVI ranged from 0.04 to 0.63, with both the median and mean 
 
 ```{r echo=TRUE}
 
-knitr::opts_chunk$set(
-    echo = TRUE, 
-    eval = TRUE
-  )
-
 a <- gspace |>
   filter(indicator_2015 == "High" |
            indicator_2015 == "Very High" |
@@ -156,11 +112,6 @@ b. Scored `Exceptionally Low` at any point in the years covered.
 ```
 
 ```{r echo=TRUE}
-
-knitr::opts_chunk$set(
-    echo = TRUE, 
-    eval = TRUE
-  )
 
 b <- gspace |>
   filter(indicator_2010 == "Exceptionally Low" |
@@ -177,26 +128,10 @@ c. Urban areas in arid climate that became greener (as measured by annual weight
 
 ```{r echo=TRUE}
 
-knitr::opts_chunk$set(
-    echo = TRUE, 
-    eval = TRUE
-  )
-
 c <- gspace |>
   filter(Climate_region == "Arid",
          annual_weight_avg_2020 > annual_weight_avg_2010)
 count(c)
-
-AllConditionals <- gspace |>
-    filter(indicator_2015 == "High" |
-             indicator_2015 == "Very High" |
-             indicator_2015 == "Exceptionally High",
-           indicator_2010 == "Exceptionally Low" |
-             indicator_2020 == "Exceptionally Low" |
-             indicator_2021 == "Exceptionally Low",
-           annual_weight_avg_2020 > annual_weight_avg_2010,
-           climate_region == "Arid")
-count(AllConditional) 
 ```
 
 6.  How many urban areas became less green (measured by annual average) from 2010 to 2021? Were these changes concentrated in a particular geographic or climate region? Explain (with evidence, of course).
