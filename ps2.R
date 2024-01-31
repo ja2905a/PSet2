@@ -103,6 +103,33 @@ ClimRegion |>
   mutate(ClimRegionPer = obs / sum(obs) * 100)
 
 
+#7.  Present a histogram showing the change in greenspace
+#(annual average) from 2010 to 2021. Note that you will
+#need to create a new variable equal to this difference.
 
-.
+Gspace7 <-
+  gspace |>
+   mutate(GspaceDiff = annual_avg_2021 - annual_avg_2010)
+
+hist(Gspace7$GspaceDiff,
+     main = "Histogram of Greenspace Change between 2010 and 2021",
+     xlab = "Greenspace Change",
+     breaks = 30)
+
+
+ggplot(data = gspace,
+       mapping= aes(x = annual_weight_avg_2021,
+                    y = annual_weight_avg_2010,
+                    xmin = 0)) +
+  geom_point(color=ifelse(gspace$annual_avg_2021 < gspace$annual_avg_2010,
+                          "red", "black")) +
+  labs(x = "Population-Weighted Greenspace 2021",
+       y = "Population-Weighted Greenspace 2010",
+       title = "Greenspace Plot") +
+  geom_abline(intercept = 0.0,
+              slope = 1,
+              color = "blue",
+              size = 1)
+
+  
 
