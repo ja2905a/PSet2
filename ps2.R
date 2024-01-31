@@ -77,5 +77,32 @@ conditional <- gspace |>
            climate_region == "Arid")
 count(conditional)  
 
+#6.  How many urban areas became less green (measured by annual average)
+#from 2010 to 2021? Were these changes concentrated in a particular
+#geographic or climate region? Explain (with evidence, of course)
 
+LessGreen <- gspace |>
+  filter(annual_avg_2010 > annual_avg_2021)
+count(LessGreen)
+
+
+MajorGeoRegion <-
+  LessGreen |>
+  group_by(Major_Geo_Region) |>
+  summarise(
+  obs = n())
+MajorGeoRegion |>
+  mutate(MajorGeoRegionPer = obs / sum(obs) * 100)
+
+ClimRegion <-
+  LessGreen |>
+  group_by(Climate_region) |>
+  summarise(
+    obs = n())
+ClimRegion |>
+  mutate(ClimRegionPer = obs / sum(obs) * 100)
+
+
+
+.
 

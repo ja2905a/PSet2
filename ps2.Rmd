@@ -136,6 +136,33 @@ count(c)
 
 6.  How many urban areas became less green (measured by annual average) from 2010 to 2021? Were these changes concentrated in a particular geographic or climate region? Explain (with evidence, of course).
 
+```{r echo=TRUE}
+
+LessGreen <- gspace |>
+  filter(annual_avg_2010 > annual_avg_2021)
+count(LessGreen)
+
+
+MajorGeoRegion <-
+  LessGreen |>
+  group_by(Major_Geo_Region) |>
+  summarize(
+  obs = n())
+MajorGeoRegion |>
+  mutate(MajorGeoRegionPer = obs / sum(obs) * 100)
+
+ClimRegion <-
+  LessGreen |>
+  group_by(Climate_region) |>
+  summarize(
+    obs = n())
+ClimRegion |>
+  mutate(ClimRegionPer = obs / sum(obs) * 100)
+
+```
+
+A total of 128 urban areas became less green between 2010 and 2021. These decreases were most prevalent in Europe, where 37% of the 128 urban areas are, followed by Asia and Africa. Decreases were also most common in temperate regions where 35% of the 128 urban areas are, followed by continental and tropical climate regions.
+
 7.  Present a histogram showing the change in greenspace (annual average) from 2010 to 2021. Note that you will need to create a new variable equal to this difference.
 
 8.  Present a scatter plot of population weighted greenspace in 2021 over the greenspace in 2010.
