@@ -32,9 +32,9 @@ summary <- bind_rows(AnnualAvg21, PeakNVDI21, PeakWeight21, WeightAvg21)
 summary21 <- summary[ -c(2, 5, 7)]
 
 summary21$Var <- c("AnnualAvg21",
-                        "PeakNVDI21",
-                        "PeakWeight21",
-                        "WeightAvg21")
+                   "PeakNVDI21",
+                   "PeakWeight21",
+                   "WeightAvg21")
 
 knitr::kable(summary21)
 

@@ -100,6 +100,33 @@ The greenspace data has observations for 1038 urban areas.
 
 4. In a couple of sentences and with reference to a well-formatted tabulation, describe the greenspace classification scores for urban areas in 2021.
 
+```{r}
+
+knitr::opts_chunk$set(
+    echo = TRUE, 
+    eval = TRUE
+  )
+
+#WARNING: I know this code is bad. I am sorry.
+
+AnnualAvg21 = summary(gspace$annual_avg_2021)
+PeakNVDI21 = summary(gspace$peak_NDVI_2021)
+PeakWeight21 = summary(gspace$peak_weight_2021)
+WeightAvg21 = summary(gspace$annual_weight_avg_2021)
+
+summary <- bind_rows(AnnualAvg21, PeakNVDI21, PeakWeight21, WeightAvg21)
+
+summary21 <- summary[ -c(2, 5, 7)]
+
+summary21$Var <- c("AnnualAvg21",
+                   "PeakNVDI21",
+                   "PeakWeight21",
+                   "WeightAvg21")
+
+knitr::kable(summary21)
+
+```
+
 5. Report the number of urban areas that satisfy the conditions below. Either write your code inline or echo the code that generated the answer.   
 
     a. Scored `High` or above for greenspace in 2015.  
